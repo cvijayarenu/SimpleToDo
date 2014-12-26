@@ -2,6 +2,8 @@ Project 0: SimpleToDo
 ==========
 This is Simple To Do android application. This app allows to create a to do items , edit them and delete them. 
 
+Time spent: 4 hours spent in total
+
 Completed user stories:
 
  * [x] Required: User can view a list of items in the to do list. 
@@ -31,7 +33,9 @@ Completed user stories:
 * Item will be deleted. 
 
 
+Walkthrough of all user stories:
 
+![Video Walkthrough](todo_walkthrough.gif)
 
 
 
