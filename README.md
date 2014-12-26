@@ -2,6 +2,14 @@ Project 0: SimpleToDo
 ==========
 This is Simple To Do android application. This app allows to create a to do items , edit them and delete them. 
 
+Completed user stories:
+
+ * [x] Required: User can view a list of items in the to do list. 
+ * [x] Required: User can add a item to the to do list. 
+ * [x] Required: User can edit a item in the to do list. 
+ * [x] Required: User can delete a item in the to do list. 
+ 
+
 1. Adding Item
 -----------
 * Launch the app. 
@@ -21,6 +29,8 @@ This is Simple To Do android application. This app allows to create a to do item
 * Launch the app.
 * Long press the item to be deleted. 
 * Item will be deleted. 
+
+
 
 
 
