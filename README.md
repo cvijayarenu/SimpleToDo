@@ -37,6 +37,7 @@ Walkthrough of all user stories:
 
 ![Video Walkthrough](todo_walkthrough.gif)
 
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
 
