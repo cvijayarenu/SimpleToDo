@@ -11,6 +11,7 @@ Completed user stories:
  * [x] Required: User can edit a item in the to do list. 
  * [x] Required: User can delete a item in the to do list.
  * [x] Optional: Storage SQLite instead of text file.
+ * [x] Optional: Added custom adaptor for UI.
  
 
 1. Adding Item
@@ -41,6 +42,10 @@ Walkthrough of all user stories:
 Walkthrough with SQLite
 
 ![Video Walkthrough](todo_walkthrough2.gif)
+
+Walkthrough with Custom Adaptor
+
+![Video Walkthrough](todo_walkthrough3.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
