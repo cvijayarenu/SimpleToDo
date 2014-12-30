@@ -38,6 +38,10 @@ Walkthrough of all user stories:
 
 ![Video Walkthrough](todo_walkthrough.gif)
 
+Walkthrough with SQLite
+
+![Video Walkthrough](todo_walkthrough2.gif)
+
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
