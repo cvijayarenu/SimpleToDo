@@ -9,7 +9,8 @@ Completed user stories:
  * [x] Required: User can view a list of items in the to do list. 
  * [x] Required: User can add a item to the to do list. 
  * [x] Required: User can edit a item in the to do list. 
- * [x] Required: User can delete a item in the to do list. 
+ * [x] Required: User can delete a item in the to do list.
+ * [x] Optional: Storage SQLite instead of text file.
  
 
 1. Adding Item
