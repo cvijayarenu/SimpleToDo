@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity {
 
     ArrayList<TodoItem> items;
-    ArrayAdapter<TodoItem> itemsAdapter;
+    TodoAdapter todoAdapter;
     ListView lvItems;
     TodoItemDatabase todoDatabase;
 
@@ -38,8 +38,8 @@ public class MainActivity extends ActionBarActivity {
         lvItems = (ListView) findViewById(R.id.lvItems);
         items = new ArrayList<TodoItem>();
         readItems();
-        itemsAdapter = new ArrayAdapter<TodoItem>(this, android.R.layout.simple_list_item_1, items);
-        lvItems.setAdapter(itemsAdapter);
+        todoAdapter = new TodoAdapter(this, items);
+        lvItems.setAdapter(todoAdapter);
         setupListViewListener();
     }
 
@@ -60,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
                         todoDatabase.deleteTodoItem(itemtodel);
 
                         items.remove(pos);
-                        itemsAdapter.notifyDataSetChanged();
+                        todoAdapter.notifyDataSetChanged();
                         Toast.makeText(MainActivity.this, "Item Removed", Toast.LENGTH_SHORT).show();
                         return true;
                     }
@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
                   todoDatabase.updateTodoItem(item);
 
                   items.set(pos, item);
-                  itemsAdapter.notifyDataSetChanged();
+                  todoAdapter.notifyDataSetChanged();
               }
         }
     }
@@ -105,7 +105,7 @@ public class MainActivity extends ActionBarActivity {
             long id = todoDatabase.addTodoItem(item);
             item.setId(id);
             items.add(item);
-            itemsAdapter.notifyDataSetChanged();
+            todoAdapter.notifyDataSetChanged();
             etNewItem.setText("");
         } else {
             Toast.makeText(this, "Can't add Empty Item", Toast.LENGTH_SHORT).show();
