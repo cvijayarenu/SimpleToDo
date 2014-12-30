@@ -5,9 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by chandrav on 12/29/14.
@@ -16,7 +22,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 6;
 
     // Database Name
     private static final String DATABASE_NAME = "todoListDatabase";
@@ -28,6 +34,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_BODY = "body";
     private static final String KEY_PRIORITY = "priority";
+    private static final String KEY_DUE_DATE = "duedate";
 
     public TodoItemDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,8 +48,13 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         // Construct a table for todo items
         String CREATE_TODO_TABLE = "CREATE TABLE " + TABLE_TODO + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_BODY + " TEXT,"
-                + KEY_PRIORITY + " INTEGER" + ")";
-        db.execSQL(CREATE_TODO_TABLE);
+                + KEY_PRIORITY + " INTEGER, "
+                + KEY_DUE_DATE + " DATE )";
+        try {
+            db.execSQL(CREATE_TODO_TABLE);
+        } catch (Exception e){
+            Log.d("DB", e.getMessage());
+        }
     }
 
     // Upgrading the database between versions
@@ -50,9 +62,14 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
     // adding constraints to database, etc
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion == 1) {
+        if (newVersion == 6) {
             // Wipe older tables if existed
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TODO);
+            try {
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_TODO);
+            }catch (Exception e){
+                Log.d("DB", e.getMessage());
+            }
+
             // Create tables again
             onCreate(db);
         }
@@ -66,6 +83,7 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_BODY, item.getBody());
         values.put(KEY_PRIORITY, item.getPriority());
+        values.put(KEY_DUE_DATE, item.getCompletionDate().toString());
         // Insert Row
         long id = db.insert(TABLE_TODO, null, values);
         db.close(); // Closing database connection
@@ -84,7 +102,14 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
         // Load result into model object
-        TodoItem item = new TodoItem(cursor.getString(1), cursor.getInt(2));
+        Date duedate = new Date();
+        String date = cursor.getString(3);
+        try {
+            duedate = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ENGLISH).parse(date);
+        } catch (ParseException e) {
+            Log.d("Date", e.getMessage());
+        }
+        TodoItem item = new TodoItem(cursor.getString(1), cursor.getInt(2),duedate );
         item.setId(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID)));
         // return todo item
         return item;
@@ -101,7 +126,14 @@ public class TodoItemDatabase extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                TodoItem item = new TodoItem(cursor.getString(1), cursor.getInt(2));
+                Date duedate = new Date();
+                String date = cursor.getString(3);
+                try {
+                    duedate = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.ENGLISH).parse(date);
+                } catch (ParseException e) {
+                    Log.d("Date", e.getMessage());
+                }
+                TodoItem item = new TodoItem(cursor.getString(1), cursor.getInt(2), duedate);
                 item.setId(cursor.getInt(0));
                 // Adding todo item to list
                 todoItems.add(item);

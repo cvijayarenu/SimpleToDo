@@ -19,6 +19,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -101,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText  = etNewItem.getText().toString();
         if (itemText != null && !itemText.isEmpty()){
-            TodoItem item = new TodoItem(itemText, 1);
+            TodoItem item = new TodoItem(itemText, 1, new Date());
             long id = todoDatabase.addTodoItem(item);
             item.setId(id);
             items.add(item);
