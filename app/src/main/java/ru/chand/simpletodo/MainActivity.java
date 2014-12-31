@@ -1,25 +1,19 @@
 package ru.chand.simpletodo;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Debug;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -37,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
         todoDatabase = new TodoItemDatabase(this);
         setContentView(R.layout.activity_main);
         lvItems = (ListView) findViewById(R.id.lvItems);
-        items = new ArrayList<TodoItem>();
+        items = new ArrayList<>();
         readItems();
         todoAdapter = new TodoAdapter(this, items);
         lvItems.setAdapter(todoAdapter);
@@ -48,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
         try {
             items = (ArrayList<TodoItem>) todoDatabase.getAllTodoItems();
         } catch (Exception e){
-            items = new ArrayList<TodoItem>();
+            items = new ArrayList<>();
         }
     }
 
@@ -102,7 +96,9 @@ public class MainActivity extends ActionBarActivity {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText  = etNewItem.getText().toString();
         if (itemText != null && !itemText.isEmpty()){
-            TodoItem item = new TodoItem(itemText, 1, new Date());
+            int priority = new Random().nextInt(3) + 1;
+            Date dueDate = new Date(new Date().getTime() + (new Random().nextInt(24) + 1) * 1000 * 60 * 60 );
+            TodoItem item = new TodoItem(itemText, priority, dueDate);
             long id = todoDatabase.addTodoItem(item);
             item.setId(id);
             items.add(item);
